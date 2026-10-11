@@ -1,0 +1,22 @@
+[
+  {"q": "How many units of Mouse do we have in stock?", "tool": "sql", "gold_sql": "SELECT s.qty FROM stock s JOIN products p ON p.id = s.product_id WHERE p.name = 'Mouse'"},
+  {"q": "Which products are below their reorder level?", "tool": "sql", "gold_sql": "SELECT p.name FROM products p JOIN stock s ON s.product_id = p.id WHERE s.qty < p.reorder_level ORDER BY p.name"},
+  {"q": "What was our total revenue in March 2026?", "tool": "sql", "gold_sql": "SELECT ROUND(SUM(revenue), 2) FROM sales WHERE date LIKE '2026-03%'"},
+  {"q": "Which 3 products earned the most revenue overall?", "tool": "sql", "gold_sql": "SELECT p.name FROM products p JOIN sales s ON s.product_id = p.id GROUP BY p.id ORDER BY SUM(s.revenue) DESC LIMIT 3"},
+  {"q": "How many products are in each category?", "tool": "sql", "gold_sql": "SELECT category, COUNT(*) FROM products GROUP BY category ORDER BY category"},
+  {"q": "Which supplier has the longest lead time?", "tool": "sql", "gold_sql": "SELECT name FROM suppliers ORDER BY lead_days DESC LIMIT 1"},
+  {"q": "How many units did we sell in the Grocery category in total?", "tool": "sql", "gold_sql": "SELECT SUM(s.qty) FROM sales s JOIN products p ON p.id = s.product_id WHERE p.category = 'Grocery'"},
+  {"q": "Which products have fewer than 15 units in stock?", "tool": "sql", "gold_sql": "SELECT p.name FROM products p JOIN stock s ON s.product_id = p.id WHERE s.qty < 15 ORDER BY p.name"},
+  {"q": "What is the total quantity of Notebook sold?", "tool": "sql", "gold_sql": "SELECT SUM(s.qty) FROM sales s JOIN products p ON p.id = s.product_id WHERE p.name = 'Notebook'"},
+  {"q": "Which category earned the most revenue?", "tool": "sql", "gold_sql": "SELECT p.category FROM products p JOIN sales s ON s.product_id = p.id GROUP BY p.category ORDER BY SUM(s.revenue) DESC LIMIT 1"},
+  {"q": "List all products supplied by Beta Wholesale.", "tool": "sql", "gold_sql": "SELECT p.name FROM products p JOIN suppliers s ON s.id = p.supplier_id WHERE s.name = 'Beta Wholesale' ORDER BY p.name"},
+  {"q": "What is the unit cost of Olive Oil?", "tool": "sql", "gold_sql": "SELECT unit_cost FROM products WHERE name = 'Olive Oil'"},
+  {"q": "Will Earbuds run out in the next 2 weeks?", "tool": "forecast", "product": "Earbuds"},
+  {"q": "Forecast demand for Green Tea for the next 30 days.", "tool": "forecast", "product": "Green Tea"},
+  {"q": "How many Notebook units will we sell next week?", "tool": "forecast", "product": "Notebook"},
+  {"q": "Do we need to reorder Desk Lamp soon?", "tool": "forecast", "product": "Desk Lamp"},
+  {"q": "What is the return window for damaged goods?", "tool": "docs", "source": "returns_policy.md"},
+  {"q": "How is the reorder quantity calculated?", "tool": "docs", "source": "reorder_rules.md"},
+  {"q": "What are the payment terms with our suppliers?", "tool": "docs", "source": "supplier_policy.md"},
+  {"q": "Who has to approve emergency purchase orders?", "tool": "docs", "source": "reorder_rules.md"}
+]
